@@ -1,0 +1,83 @@
+{% extends "index.html" %}
+{% block content %}
+
+<style>
+    .alert-custom {
+        background-color: rgb(167, 244, 122); 
+        color:rgb(6, 6, 6);
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1050;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .alert-custom {
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+    }
+
+    .welcome-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 70px); 
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .welcome-container h1 {
+        font-size: 3rem;
+        color: #007bff; 
+    }
+
+    .welcome-container p {
+        font-size: 1.2rem;
+        color: #555; 
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">HRMS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if messages %}
+    <div class="alert alert-custom" role="alert">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="welcome-container">
+    <h1>Welcome, {{ user.username }}</h1>
+    <p>Your personalized dashboard awaits you.</p>
+</div>
+
+{% endblock content %}
